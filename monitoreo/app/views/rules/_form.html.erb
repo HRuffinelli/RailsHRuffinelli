@@ -1,0 +1,56 @@
+<%= form_for @rule do |f| %>
+  <% if @rule.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@rule.errors.count, "error") %> 
+        imposibilitan la creación del registro.
+      </h2>
+      <ul>
+        <% @rule.errors.full_messages.each do |msg| %>
+          <li>
+            <%= msg %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <p>
+    <%= f.label :Nombre %><br>
+    <%= f.text_field :name %>
+  </p>
+  
+  <p>
+    <%= f.label "Prioridad" %>
+    <%
+      array_priority = Array.new
+      @rules.each do |reglas|
+        array_priority.push(reglas.priority)
+      end
+      array_totalpriority = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+      array_select = array_totalpriority - array_priority
+      if (@rule.priority)
+        array_select.push(@rule.priority)
+      end
+    %>
+    <%= f.select :priority, options_for_select(array_select.sort.reverse, @rule.priority), {}, {} %>
+  </p> 
+  
+  <p>
+    <%= f.label "Riesgo de Carga de CPU" %><br>
+    <%= f.text_field :cpuchargeexceed %>
+  </p>
+  
+  <p>
+    <%= f.label "Riesgo de Espacio de Disco" %><br>
+    <%= f.text_field :diskspaceexceed %>
+  </p>
+  
+  <p>
+    <%= f.label "Tiempo de Riesgo (en segundos)" %><br>
+    <%= f.text_field :timeexceed %>
+  </p>
+  <p>
+    <%= f.submit 'Guardar' %>
+  </p>
+<% end %>

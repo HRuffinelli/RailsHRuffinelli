@@ -1,0 +1,33 @@
+<h1>Listado de Mediciones de Recursos</h1>
+<hr>
+<div class="table-responsive">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Nombre Servidor</th>
+        <th>Carga de CPU</th>
+        <th>Espacio de Disco</th>
+      </tr> 
+    </thead>
+    <tbody>
+      <% @infos.each do |info| %>
+        <tr>
+          <td><%= Time.at(info.created_at).utc.strftime("%d/%m/%Y %H:%M") %></td>
+          <td><%= info.server.name %></td>
+          <td><%= info.cpucharge %></td>
+          <td><%= info.diskspace %></td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>
+<%= will_paginate @infos %>
+<div align="center">
+  <%= link_to 'Redimiento de Servidores en las últimas 3 horas', {:controller => :infos, :action => :chart }%>  
+</div>
+<br>
+<div>
+  <%= link_to 'Volver a Principal', root_url %>
+</div>
+<hr>

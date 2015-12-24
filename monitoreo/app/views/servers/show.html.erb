@@ -1,0 +1,18 @@
+<h1>Detalle de Servidor supervisado</h1>
+<p>
+  <strong>Nombre Servidor:</strong>
+  <span><%= @server.name %></span>
+</p>
+ 
+<p>
+  <strong>IP Servidor:</strong>
+  <span><%= @server.ip %></span>
+</p>
+
+<p>
+  <strong>DNS Servidor:</strong>
+  <span><%= @server.dns %></span>
+</p>
+<hr>
+<%= link_to 'Modificar', edit_server_path(@server) %> | <%= link_to 'Volver', servers_path %>
+

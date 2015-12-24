@@ -1,0 +1,17 @@
+<h1>Detalle de Usuario</h1>
+<p>
+  <strong>Nombre y Apellido:</strong>
+  <%= @user.name %> <%= @user.lastname %>
+</p>
+ 
+<p>
+  <strong>Usuario:</strong>
+  <%= @user.alias %>
+</p>
+
+<p>
+  <strong>Email</strong>
+  <%= @user.email %>
+</p>
+<hr>
+<%= link_to 'Modificar', edit_user_path(@user) %> | <%= link_to 'Volver', users_path %>

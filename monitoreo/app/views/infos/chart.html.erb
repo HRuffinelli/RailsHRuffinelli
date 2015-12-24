@@ -1,0 +1,133 @@
+<%= javascript_include_tag "highcharts.js" %>
+<%= javascript_include_tag "Exporting.js" %>
+
+<script type="text/javascript">
+  var heightPantalla = $(window).height();
+  $(document).ready(function(){
+    /*$("#click").click(function() {
+      $("#resultado").text(JSON.stringify(serieArrayDiskSpace));
+    });*/
+    $("#chart1").css({height:heightPantalla/2,width:'100%'});
+    $("#chart2").css({height:heightPantalla/2,width:'100%'});
+    
+    //Charts
+    $(function () {
+      $('#chart1').highcharts({ //Chart Carga de CPU
+          title: {
+              text: 'Carga de CPU',
+              x: -20 //center
+          },
+          subtitle: {
+              text: 'Porcentaje en las últimas 3 horas',
+              x: -20
+          },
+          xAxis: {
+              categories: arrayCPUChargeNam
+          },
+          yAxis: {
+              title: {
+                  text: 'Porcentaje de Uso'
+              }
+          },
+          tooltip: {
+              valueSuffix: ' %'
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle',
+              borderWidth: 0
+          },
+          credits: {
+              enabled: false
+          },
+          series: serieArrayCPUCharge
+      });
+      
+      $('#chart2').highcharts({ //Chart Espacio de Disco
+          title: {
+              text: 'Espacio de Disco Disponible',
+              x: -20 //center
+          },
+          subtitle: {
+              text: 'Valores de las últimas 3 horas',
+              x: -20
+          },
+          xAxis: {
+              categories: arrayDiskSpaceNam
+          },
+          yAxis: {
+              title: {
+                  text: 'Cantidad de GBs libres en Disco'
+              }
+          },
+          tooltip: {
+            /*formatter: function() {
+                return this.series.name + ' - ' + this.series.ip + ': <b>' + this.y + '</b>';
+            }*/
+            valueSuffix: ' Gbs'
+          },
+          legend: {
+              layout: 'vertical',
+              align: 'right',
+              verticalAlign: 'middle',
+              borderWidth: 0
+          },
+          credits: {
+              enabled: false
+          },
+          series: serieArrayDiskSpace,
+          exporting: {
+              buttons: {
+                  customButton: {
+                      text: 'Volver',
+                      symbolStroke: "white",
+                      theme: {
+                          fill: "#5799FF"
+                      },
+                      onclick: function () {
+                        window.location.href = '<%= infos_path %>';
+                      },
+                      verticalAlign: 'bottom'
+                  }
+              }
+          }
+      });
+    });
+    //Charts
+  });
+
+  var hashValoresCPU = {};
+  var hashValoresDisk = {};
+  var serieArrayCPUCharge = [];
+  var serieArrayDiskSpace = [];
+  var arrayCPUChargeVal = [];
+  var arrayDiskSpaceVal = [];
+  var arrayCPUChargeNam = [];
+  var arrayDiskSpaceNam = [];
+  <% start_time = (Time.now.to_time - 10800).to_datetime %> //En un rango de 3 horas
+  <% @infos = Info.where("created_at > ?", "#{start_time}").order("server_id ASC").order("created_at ASC") %>
+  <% infosg = @infos.group(:server_id).count %>
+  <% infosg.each do |key, value| %>
+    <% server = Server.find(key) %>
+    arrayCPUChargeNam = [];
+    arrayDiskSpaceNam = [];
+    <% @infos.where(:server_id => key).each do |info| %>
+      arrayCPUChargeVal.push(<%= info.cpucharge %>);
+      arrayCPUChargeNam.push('<%= Time.at(info.created_at).utc.strftime("%H:%M") %>');
+      arrayDiskSpaceVal.push(<%= info.diskspace %>);
+      arrayDiskSpaceNam.push('<%= Time.at(info.created_at).utc.strftime("%H:%M") %>');      
+    <% end %>
+    hashValoresCPU = {name:'<%= server.name + ' - ' + server.ip %>',data:arrayCPUChargeVal};
+    hashValoresDisk = {name:'<%= server.name + ' - ' + server.ip %>',data:arrayDiskSpaceVal};
+    serieArrayCPUCharge.push(hashValoresCPU);    
+    serieArrayDiskSpace.push(hashValoresDisk);
+    arrayCPUChargeVal = [];
+    arrayDiskSpaceVal = []; 
+  <% end %>  
+</script>
+<!--<button id="click">Pulsame</button>
+<p id="resultado" style="height:50px;width:90%;background-color:lightblue;text-align:justify"></p>-->
+<div id="chart1"></div>
+<div id="chart2"></div>
+        

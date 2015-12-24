@@ -1,0 +1,8 @@
+Buenas, <%= @email["recipient"] %>
+===================================================================================
+ 
+<%= ActionView::Base.full_sanitizer.sanitize(@email["body"]) %>
+ 
+Si deseas loguearte al mantenimiento de las notificaciones, accedé a <%= @url %>.
+ 
+Cordiales Saludos.

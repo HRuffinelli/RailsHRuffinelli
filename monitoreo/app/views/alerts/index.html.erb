@@ -1,0 +1,33 @@
+<h1>Listado de Alertas - Relación Servidor/Regla</h1>
+<hr>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Usuario</th>
+        <th>Regla</th>
+        <th colspan="3"></th>
+      </tr> 
+    </thead>
+    <tbody>
+      <% @alerts.each do |alert| %>
+        <tr>
+          <td><%= alert.user.name + ' ' + alert.user.lastname%></td>
+          <td><%= alert.rule.name %></td>
+          <td><%= link_to 'Detalle', alert_path(alert) %></td>
+          <td><%= link_to 'Editar', edit_alert_path(alert) %></td>
+          <td><%= link_to 'Borrar', alert_path(alert), method: :delete, data: { confirm: 'Estas Seguro?' } %></td>      
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>
+<hr>
+<div>
+  <%= link_to 'Nueva Alerta', new_alert_path %>
+</div>
+<br>
+<div>
+  <%= link_to 'Volver a Principal', root_url %>
+</div>
+<hr>

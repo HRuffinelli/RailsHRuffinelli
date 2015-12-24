@@ -1,0 +1,28 @@
+<h1>Detalle de Regla</h1>
+<p>
+  <strong>Nombre:</strong>
+  <span><%= @rule.name %></span>
+</p>
+
+<p>
+  <strong>Prioridad</strong>
+  <span><%= @rule.priority %></span>
+</p>
+ 
+<p>
+  <strong>Riesgo de CPU</strong>
+  <span><%= @rule.cpuchargeexceed %></span>
+</p>
+
+<p>
+  <strong>Riesgo Espacio Disco</strong>
+  <span><%= @rule.diskspaceexceed %></span>
+</p>
+
+<p>
+  <strong>Riesgo Tiempo</strong>
+  <span><%= @rule.timeexceed %></span>
+</p>
+<hr>
+<%= link_to 'Modificar', edit_rule_path(@rule) %> | <%= link_to 'Volver', rules_path %>
+

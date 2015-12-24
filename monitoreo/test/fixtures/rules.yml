@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cpuchargeexceed: 1.5
+  diskspaceexceed: 1.5
+  timeexceed: 1
+
+two:
+  name: MyString
+  cpuchargeexceed: 1.5
+  diskspaceexceed: 1.5
+  timeexceed: 1

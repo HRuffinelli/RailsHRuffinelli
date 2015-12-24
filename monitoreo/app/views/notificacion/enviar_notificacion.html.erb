@@ -1,0 +1,8 @@
+    <h3>Buenas, <%= @email["recipient"] %></h3>
+    <p>
+      <%= @email["body"].html_safe %>
+    </p>
+    <p>
+      Si deseas loguearte al mantenimiento de las notificaciones, accedé a <%= @url %>.
+    </p>
+    <p>Cordiales Saludos.</p>

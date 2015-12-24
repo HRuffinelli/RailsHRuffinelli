@@ -1,0 +1,12 @@
+<h1>Detalle de Alerta</h1>
+<p>
+  <strong>Nombre:</strong>
+  <span><%= @alert.user.name + ' ' +  @alert.user.lastname%></span>
+</p>
+ 
+<p>
+  <strong>Regla:</strong>
+  <span><%= @alert.rule.name %></span>
+</p>
+<hr>
+<%= link_to 'Modificar', edit_alert_path(@alert) %> | <%= link_to 'Volver', alerts_path %>
